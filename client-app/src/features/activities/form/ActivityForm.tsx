@@ -1,11 +1,11 @@
 import { Button, Form, Segment } from 'semantic-ui-react';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useStore } from '../../../../app/stores/store';
+import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { act } from '@testing-library/react';
-import { Activity } from '../../../../app/models/activity';
-import LoadingComponent from '../../../../app/layout/LoadingComponents';
+import { Activity } from '../../../app/models/activity';
+import LoadingComponent from '../../../app/layout/LoadingComponents';
 import { v4 as uuid } from 'uuid';
 
 export default observer(function ActivityForm() {
