@@ -13,6 +13,7 @@ export default function NavBar() {
           ></img>
         </Menu.Item>
         <Menu.Item as={NavLink} to='/activities' name='Activities'></Menu.Item>
+        <Menu.Item as={NavLink} to='/errors' name='Errors'></Menu.Item>
         <Menu.Item header>
           <Button
             as={NavLink}
