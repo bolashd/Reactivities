@@ -13,6 +13,15 @@ const sleep = (delay: number) => {
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
+const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+
+axios.interceptors.request.use((config) => {
+    const token = store.commonStore.token;
+    if (token && config.headers)
+        config.headers.Authorization = `Bearer ${token}`;
+    return config;
+});
+
 axios.interceptors.response.use(
     async (response) => {
         await sleep(1000);
@@ -24,7 +33,7 @@ axios.interceptors.response.use(
             case 400:
                 if (
                     config.method === 'get' &&
-                    Object.prototype.hasOwnProperty.call(data.errors, 'id')
+                    data.errors.hasOwnProperty('id')
                 ) {
                     router.navigate('not-found');
                 }
@@ -58,8 +67,6 @@ axios.interceptors.response.use(
     }
 );
 
-const responseBody = <T>(response: AxiosResponse<T>) => response.data;
-
 const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) =>
@@ -79,7 +86,7 @@ const Activities = {
 };
 
 const Account = {
-    current: () => requests.get<User>('/account'),
+    current: () => requests.get<User>('account'),
     login: (user: UserFormValues) =>
         requests.post<User>('/account/login', user),
     register: (user: UserFormValues) =>

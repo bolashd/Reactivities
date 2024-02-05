@@ -7,25 +7,25 @@ import LoadingComponent from '../../../app/layout/LoadingComponents';
 import ActivityFilters from './ActivityFilters';
 
 export default observer(function ActivityDashboard() {
-  const { activityStore } = useStore();
-  const { loadActivities, activityRegistry } = activityStore;
+    const { activityStore } = useStore();
+    const { loadActivities, activityRegistry } = activityStore;
 
-  useEffect(() => {
-    if (activityRegistry.size <= 1) loadActivities();
-    loadActivities();
-  }, [loadActivities, activityRegistry.size]);
+    useEffect(() => {
+        if (activityRegistry.size <= 1) loadActivities();
+        loadActivities();
+    }, [loadActivities, activityRegistry.size]);
 
-  if (activityStore.loadingInitial)
-    return <LoadingComponent content='Loading app...' />;
+    if (activityStore.loadingInitial)
+        return <LoadingComponent content='Loading activities...' />;
 
-  return (
-    <Grid>
-      <Grid.Column width='10'>
-        <ActivityList />
-      </Grid.Column>
-      <Grid.Column width='6'>
-        <ActivityFilters />
-      </Grid.Column>
-    </Grid>
-  );
+    return (
+        <Grid>
+            <Grid.Column width='10'>
+                <ActivityList />
+            </Grid.Column>
+            <Grid.Column width='6'>
+                <ActivityFilters />
+            </Grid.Column>
+        </Grid>
+    );
 });

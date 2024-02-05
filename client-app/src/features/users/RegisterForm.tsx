@@ -3,33 +3,50 @@ import MyTextInput from '../../app/common/form/MyTextInput';
 import { Button, Header, Label } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../app/stores/store';
+import * as Yup from 'yup';
+import ValidationErrors from '../errors/ValidationErrors';
 
-export default observer(function LoginForm() {
+export default observer(function RegisterForm() {
     const { userStore } = useStore();
     return (
         <Formik
-            initialValues={{ email: '', password: '', error: null }}
+            initialValues={{
+                displayName: '',
+                username: '',
+                email: '',
+                password: '',
+                error: null,
+            }}
             onSubmit={(values, { setErrors }) =>
                 userStore
-                    .login(values)
-                    .catch((error) =>
-                        setErrors({ error: 'Inavlid email or password' })
-                    )
+                    .register(values)
+                    .catch((error) => setErrors({ error: error }))
             }
+            validationSchema={Yup.object({
+                displayName: Yup.string().required(),
+                username: Yup.string().required(),
+                email: Yup.string().required(),
+                password: Yup.string().required(),
+            })}
         >
-            {({ handleSubmit, isSubmitting, errors }) => (
+            {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
                 <Form
-                    className='ui form'
+                    className='ui form error'
                     onSubmit={handleSubmit}
                     autoComplete='off'
                 >
                     <Header
                         as='h2'
-                        content='Login to Reactivities'
+                        content='Sign up to Reactivities'
                         color='teal'
                         textAlign='center'
                     />
                     <MyTextInput placeholder='Email' name='email' />
+                    <MyTextInput
+                        placeholder='Display Name'
+                        name='displayName'
+                    />
+                    <MyTextInput placeholder='Username' name='username' />
                     <MyTextInput
                         placeholder='Password'
                         name='password'
@@ -38,18 +55,16 @@ export default observer(function LoginForm() {
                     <ErrorMessage
                         name='error'
                         render={() => (
-                            <Label
-                                style={{ marginBottom: 10 }}
-                                basic
-                                color='red'
-                                content={errors.error}
+                            <ValidationErrors
+                                errors={errors.error as unknown as string[]}
                             />
                         )}
                     />
                     <Button
+                        disabled={!isValid || !dirty || isSubmitting}
                         loading={isSubmitting}
                         positive
-                        content='Login'
+                        content='Register'
                         type='submit'
                         fluid
                     />
