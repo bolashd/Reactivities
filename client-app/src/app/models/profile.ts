@@ -19,6 +19,7 @@ export class Profile implements IProfile {
     displayName: string;
     image?: string;
     photos?: Photo[];
+    bio?: string;
 }
 
 export interface Photo {
