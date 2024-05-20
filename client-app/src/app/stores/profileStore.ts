@@ -2,7 +2,6 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import { Photo, Profile } from '../models/profile';
 import agent from '../api/agent';
 import { store } from './store';
-import { toHaveDisplayValue } from '@testing-library/jest-dom/matchers';
 
 export default class ProfileStore {
     profile: Profile | null = null;
