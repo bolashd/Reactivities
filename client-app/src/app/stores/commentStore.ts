@@ -19,7 +19,7 @@ export default class CommentStore {
         if (store.activityStore.selectedActivity) {
             this.hubConnection = new HubConnectionBuilder()
                 .withUrl(
-                    'http://localhost:5000/chat?activityId=' + activityId,
+                    import.meta.env.VITE_CHAT_URL + '?activityId=' + activityId,
                     {
                         accessTokenFactory: () =>
                             store.userStore.user?.token as string,
@@ -66,7 +66,7 @@ export default class CommentStore {
         this.stopHubConnection();
     };
 
-    addComment = async (values: any) => {
+    addComment = async (values: { body: string; activityId?: string }) => {
         values.activityId = store.activityStore.selectedActivity?.id;
         try {
             await this.hubConnection?.invoke('SendComment', values);

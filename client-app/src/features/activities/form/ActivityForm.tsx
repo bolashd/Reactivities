@@ -46,7 +46,7 @@ export default observer(function ActivityForm() {
 
     function handleFormSubmit(activity: ActivityFormValues) {
         if (!activity.id) {
-            let newActivity = {
+            const newActivity = {
                 ...activity,
                 id: uuid(),
             };
@@ -73,8 +73,6 @@ export default observer(function ActivityForm() {
                 onSubmit={(values) => handleFormSubmit(values)}
             >
                 {({
-                    values: activity,
-                    handleChange,
                     handleSubmit,
                     isValid,
                     isSubmitting,

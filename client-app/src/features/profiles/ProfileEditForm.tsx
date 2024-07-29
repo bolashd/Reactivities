@@ -11,9 +11,7 @@ interface Props {
 }
 
 export default observer(function ProfileEditForm({ setEditMode }: Props) {
-    const {
-        profileStore: { profile, updateProfile },
-    } = useStore();
+    const { profileStore: { profile, updateProfile } } = useStore();
     return (
         <Formik
             initialValues={{
